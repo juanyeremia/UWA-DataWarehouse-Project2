@@ -1,444 +1,224 @@
-Departure Airport Country/Region,Arrival Airport Country/Region
-Vanuatu,
-Russia,
-Sudan,
-Armenia,
-Iran,
-Egypt,
-Colombia,
-Cuba,
-North Korea,
-Malaysia,
-China,
-Uzbekistan,
-Spain,
-Mauritania,
-Montenegro,
-Ukraine,
-Mexico,
-Germany,
-Poland,
-Aruba,
-Netherlands Antilles,
-Venezuela,
-United Kingdom,
-Cook Islands,
-Puerto Rico,
-Virgin Islands,
-United States,
-Canada,
-Sweden,
-Finland,
-Norway,
-Bahamas,
-Argentina,
-Uruguay,
-Dominica,
-British Virgin Islands,
-Martinique,
-Guadeloupe,
-Dominican Republic,
-Saint Kitts and Nevis,
-Ireland,
-Honduras,
-Denmark,
-Australia,
-Italy,
-Switzerland,
-Isle of Man,
-Netherlands,
-Serbia,
-France,
-Lithuania,
-Anguilla,
-Taiwan,
-Vietnam,
-Macau,
-South Korea,
-Japan,
-Cambodia,
-Jamaica,
-Cayman Islands,
-Togo,
-Burkina Faso,
-Mali,
-Benin,
-Senegal,
-Afghanistan,
-Haiti,
-Suriname,
-Iraq,
-Georgia,
-India,
-Cote d'Ivoire,
-Ghana,
-Sierra Leone,
-Liberia,
-Thailand,
-Hong Kong,
-United Arab Emirates,
-Zambia,
-Greece,
-Malawi,
-South Africa,
-Mozambique,
-Nepal,
-Turks and Caicos Islands,
-Jersey,
-Estonia,
-Belgium,
-Luxembourg,
-Austria,
-Macedonia,
-Belarus,
-Iceland,
-Panama,
-Costa Rica,
-Democratic Republic of Congo,
-Mongolia,
-Indonesia,
-Portugal,
-Nigeria,
-Kenya,
-Malta,
-Bangladesh,
-Brazil,
-Turkey,
-Czech Republic,
-Ethiopia,
-Djibouti,
-Burundi,
-Rwanda,
-Moldova,
-Romania,
-Croatia,
-Jordan,
-Cyprus,
-Guernsey,
-Israel,
-Libya,
-Saudi Arabia,
-Albania,
-Ecuador,
-Kazakhstan,
-Uganda,
-Zimbabwe,
-South Sudan,
-El Salvador,
-Christmas Island,
-Guatemala,
-Nicaragua,
-Cameroon,
-Madagascar,
-Bulgaria,
-Chile,
-Paraguay,
-Belize,
-Peru,
-Philippines,
-Azerbaijan,
-Kyrgyzstan,
-Tanzania,
-Botswana,
-Angola,
-Guyana,
-Grenada,
-Trinidad and Tobago,
-Cocos (Keeling) Islands,
-Lebanon,
-Bahrain,
-Oman,
-Qatar,
-Kuwait,
-Algeria,
-Hungary,
-Latvia,
-Slovenia,
-Guinea,
-East Timor,
-Papua New Guinea,
-Solomon Islands,
-French Polynesia,
-Fiji,
-Seychelles,
-Wallis and Futuna,
-New Caledonia,
-Greenland,
-Maldives,
-Singapore,
-Bosnia and Herzegovina,
-New Zealand,
-Antigua and Barbuda,
-Barbados,
-Saint Vincent and the Grenadines,
-Saint Lucia,
-Morocco,
-Tunisia,
-Gambia,
-Cape Verde,
-Yemen,
-Namibia,
-Pakistan,
-Bhutan,
-Burma,
-Saint Pierre and Miquelon,
-Guam,
-Northern Mariana Islands,
-Mauritius,
-Reunion,
-Mayotte,
-Laos,
-Brunei,
-Gabon,
-Equatorial Guinea,
-Western Sahara,
-Comoros,
-Tuvalu,
-Tonga,
-Slovakia,
-Somalia,
-Sri Lanka,
-Chad,
-Bolivia,
-Micronesia,
-Guinea-Bissau,
-Turkmenistan,
-Tajikistan,
-Republic of Congo,
-Sao Tome and Principe,
-Niger,
-Palau,
-French Guiana,
-Samoa,
-Gibraltar,
-Bermuda,
-Central African Republic,
-American Samoa,
-Marshall Islands,
-Nauru,
-Kiribati,
-Eritrea,
-Falkland Islands,
-Niue,
-Norfolk Island,
-Faroe Islands,
-,Vanuatu
-,Wallis and Futuna
-,Russia
-,Sudan
-,Armenia
-,Iran
-,Egypt
-,Cuba
-,Colombia
-,Malaysia
-,China
-,North Korea
-,Uzbekistan
-,Spain
-,Mauritania
-,Montenegro
-,Romania
-,Ukraine
-,Mexico
-,Germany
-,Poland
-,Venezuela
-,Netherlands Antilles
-,Aruba
-,United Kingdom
-,Cook Islands
-,Virgin Islands
-,Argentina
-,United States
-,Canada
-,Sweden
-,Finland
-,Norway
-,Bahamas
-,Uruguay
-,Dominica
-,British Virgin Islands
-,Martinique
-,Guadeloupe
-,Saint Kitts and Nevis
-,Dominican Republic
-,Ireland
-,Honduras
-,Denmark
-,Australia
-,Italy
-,Switzerland
-,Isle of Man
-,Netherlands
-,Serbia
-,France
-,Lithuania
-,Anguilla
-,Taiwan
-,Macau
-,Vietnam
-,South Korea
-,Japan
-,Cambodia
-,Cayman Islands
-,Burkina Faso
-,Mali
-,Cote d'Ivoire
-,Senegal
-,Togo
-,Benin
-,Tajikistan
-,Suriname
-,Haiti
-,Costa Rica
-,Georgia
-,Iraq
-,Afghanistan
-,India
-,Ghana
-,Sierra Leone
-,Liberia
-,Hong Kong
-,Thailand
-,United Arab Emirates
-,Zambia
-,Greece
-,Malawi
-,Mozambique
-,South Africa
-,Nepal
-,Turks and Caicos Islands
-,Jersey
-,Estonia
-,Belgium
-,Czech Republic
-,Austria
-,Belarus
-,Iceland
-,Panama
-,Democratic Republic of Congo
-,Mongolia
-,Indonesia
-,Luxembourg
-,Portugal
-,Nigeria
-,Kenya
-,Malta
-,Bangladesh
-,Brazil
-,Turkey
-,Djibouti
-,Ethiopia
-,Zimbabwe
-,Rwanda
-,Burundi
-,Moldova
-,Croatia
-,Cyprus
-,Jordan
-,Guernsey
-,Israel
-,Libya
-,Saudi Arabia
-,Kuwait
-,Bulgaria
-,Albania
-,Ecuador
-,Azerbaijan
-,Uganda
-,South Sudan
-,El Salvador
-,Christmas Island
-,Guatemala
-,Nicaragua
-,Cameroon
-,Madagascar
-,Kazakhstan
-,Peru
-,Paraguay
-,Belize
-,Jamaica
-,Philippines
-,Kyrgyzstan
-,Tanzania
-,Botswana
-,Angola
-,Trinidad and Tobago
-,Grenada
-,Cocos (Keeling) Islands
-,Lebanon
-,Oman
-,Bahrain
-,Qatar
-,Algeria
-,Macedonia
-,Hungary
-,Latvia
-,Slovenia
-,Guinea
-,East Timor
-,Papua New Guinea
-,Solomon Islands
-,French Polynesia
-,Puerto Rico
-,Fiji
-,Seychelles
-,New Caledonia
-,Greenland
-,Maldives
-,Singapore
-,Slovakia
-,Bosnia and Herzegovina
-,New Zealand
-,Barbados
-,Antigua and Barbuda
-,Saint Lucia
-,Saint Vincent and the Grenadines
-,Morocco
-,Tunisia
-,Gambia
-,Cape Verde
-,Yemen
-,Somalia
-,Namibia
-,Pakistan
-,Bhutan
-,Burma
-,Reunion
-,Northern Mariana Islands
-,Guam
-,Mauritius
-,Mayotte
-,Laos
-,Chile
-,Brunei
-,Gabon
-,Equatorial Guinea
-,Western Sahara
-,Comoros
-,Tuvalu
-,Tonga
-,Sri Lanka
-,Chad
-,Palau
-,Micronesia
-,Turkmenistan
-,Republic of Congo
-,Sao Tome and Principe
-,Guinea-Bissau
-,Bolivia
-,French Guiana
-,Niger
-,Samoa
-,Gibraltar
-,Bermuda
-,Central African Republic
-,American Samoa
-,Marshall Islands
-,Nauru
-,Kiribati
-,Eritrea
-,Falkland Islands
-,Norfolk Island
-,Faroe Islands
+name
+Vanuatu
+Russia
+Sudan
+Armenia
+Iran
+Egypt
+Colombia
+Cuba
+North Korea
+Malaysia
+China
+Uzbekistan
+Spain
+Mauritania
+Montenegro
+Ukraine
+Mexico
+Germany
+Poland
+Aruba
+Netherlands Antilles
+Venezuela
+United Kingdom
+Cook Islands
+Puerto Rico
+Virgin Islands
+United States
+Canada
+Sweden
+Finland
+Norway
+Bahamas
+Argentina
+Uruguay
+Dominica
+British Virgin Islands
+Martinique
+Guadeloupe
+Dominican Republic
+Saint Kitts and Nevis
+Ireland
+Honduras
+Denmark
+Australia
+Italy
+Switzerland
+Isle of Man
+Netherlands
+Serbia
+France
+Lithuania
+Anguilla
+Taiwan
+Vietnam
+Macau
+South Korea
+Japan
+Cambodia
+Jamaica
+Cayman Islands
+Togo
+Burkina Faso
+Mali
+Benin
+Senegal
+Afghanistan
+Haiti
+Suriname
+Iraq
+Georgia
+India
+Cote d'Ivoire
+Ghana
+Sierra Leone
+Liberia
+Thailand
+Hong Kong
+United Arab Emirates
+Zambia
+Greece
+Malawi
+South Africa
+Mozambique
+Nepal
+Turks and Caicos Islands
+Jersey
+Estonia
+Belgium
+Luxembourg
+Austria
+Macedonia
+Belarus
+Iceland
+Panama
+Costa Rica
+Democratic Republic of Congo
+Mongolia
+Indonesia
+Portugal
+Nigeria
+Kenya
+Malta
+Bangladesh
+Brazil
+Turkey
+Czech Republic
+Ethiopia
+Djibouti
+Burundi
+Rwanda
+Moldova
+Romania
+Croatia
+Jordan
+Cyprus
+Guernsey
+Israel
+Libya
+Saudi Arabia
+Albania
+Ecuador
+Kazakhstan
+Uganda
+Zimbabwe
+South Sudan
+El Salvador
+Christmas Island
+Guatemala
+Nicaragua
+Cameroon
+Madagascar
+Bulgaria
+Chile
+Paraguay
+Belize
+Peru
+Philippines
+Azerbaijan
+Kyrgyzstan
+Tanzania
+Botswana
+Angola
+Guyana
+Grenada
+Trinidad and Tobago
+Cocos (Keeling) Islands
+Lebanon
+Bahrain
+Oman
+Qatar
+Kuwait
+Algeria
+Hungary
+Latvia
+Slovenia
+Guinea
+East Timor
+Papua New Guinea
+Solomon Islands
+French Polynesia
+Fiji
+Seychelles
+Wallis and Futuna
+New Caledonia
+Greenland
+Maldives
+Singapore
+Bosnia and Herzegovina
+New Zealand
+Antigua and Barbuda
+Barbados
+Saint Vincent and the Grenadines
+Saint Lucia
+Morocco
+Tunisia
+Gambia
+Cape Verde
+Yemen
+Namibia
+Pakistan
+Bhutan
+Burma
+Saint Pierre and Miquelon
+Guam
+Northern Mariana Islands
+Mauritius
+Reunion
+Mayotte
+Laos
+Brunei
+Gabon
+Equatorial Guinea
+Western Sahara
+Comoros
+Tuvalu
+Tonga
+Slovakia
+Somalia
+Sri Lanka
+Chad
+Bolivia
+Micronesia
+Guinea-Bissau
+Turkmenistan
+Tajikistan
+Republic of Congo
+Sao Tome and Principe
+Niger
+Palau
+French Guiana
+Samoa
+Gibraltar
+Bermuda
+Central African Republic
+American Samoa
+Marshall Islands
+Nauru
+Kiribati
+Eritrea
+Falkland Islands
+Niue
+Norfolk Island
+Faroe Islands
