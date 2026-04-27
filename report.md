@@ -35,7 +35,7 @@ Therefore, `country` was retained as a simple property on both `Airline` and `Ai
 
 `OPERATES` only connects `Airline -> Airport`. It will only tell us which airline flies out of which airport. But specifically for query `e` (flight between Beijing and Perth), we will need an `Airport -> Airport` relationship. Without `ROUTE`, Cypher won't be able to jump between airports directly. It would have to go through airline nodes every time.
 
-##### 3. Putting `plane_name` pro****perty on `OPERATES`
+##### 3. Putting `plane_name` property on `OPERATES`
 
 `plane_name` is stored as a property on the `OPERATES` relationship as it is required for query `d`, which involves counting distinct aircraft types per airport pair. It is not store on `Airline` or `Airport` because it describes the specific service operated between an airline and an airport, and can't be meaningfully attributed to either entity independently.
 
@@ -46,13 +46,13 @@ Therefore, `country` was retained as a simple property on both `Airline` and `Ai
 ##### Data description by columns
 
 ![Code snippet of df.columns](./assets/column_names_check.png)
-Based on the snippet above, we can see that the dataset contains information about flight information. Each row of the dataset represents the details of a plane's flight information. It tells us which airline each plane is operating under, including the country that airline is based on. It then tells us the plane's route details, showing which airports it can fly from and to.
+Based on the snippet above, we can see that the dataset contains information about airline routes and the aircraft used to operate them. Each row of the dataset represents a specific route that the airline operates on, detailing the departure and arrival airports, the country each airport is lcoated in, and the aircraft types used for that route. Additional information includes the country in whicih the airline is based and the city of each airport.
 
 ##### Data structure
 
 ![Code snippet of df.shape](./assets/structure_check.png)
 
-Based on the snippet above we can see that the dataset has 9 columns with over 57,000 rows of observations.
+Based on the snippet above we can see that the dataset has 9 columns with 57,301rows of observations.
 
 ##### Immediate Observations
 
@@ -60,7 +60,11 @@ Based on the snippet above we can see that the dataset has 9 columns with over 5
 
 The dataset contains no `null` values. Which means all columns and all rows contains a value.
 
-![](assets/duplicate_check.png)
+![](assets/dup_check.png)
+
+The dataset contains no duplicated rows, which means all records are unique.
+
+* [ ] ![](./assets/first_five.png)Inspecting the first five rows reveals that the `Plane Name` column contains `;` values, indicating that a single route may be operated using multiple aircraft types. This would require special handling during ETL to correctly extract individual plane types for query `d`.
 
 ## 3.2. Data Cleaning
 
