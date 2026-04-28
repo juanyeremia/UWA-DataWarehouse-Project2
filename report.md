@@ -43,18 +43,18 @@ Therefore, `country` was retained as a simple property on both `Airline` and `Ai
 
 ## 3.1. Dataset Overview
 
-##### Data description by columns
+### Data description by columns
 
 ![Code snippet of df.columns](./assets/column_names_check.png)
 Based on the snippet above, we can see that the dataset contains information about airline routes and the aircraft used to operate them. Each row of the dataset represents a specific route that the airline operates on, detailing the departure and arrival airports, the country each airport is lcoated in, and the aircraft types used for that route. Additional information includes the country in whicih the airline is based and the city of each airport.
 
-##### Data structure
+### Data structure
 
 ![Code snippet of df.shape](./assets/structure_check.png)
 
 Based on the snippet above we can see that the dataset has 9 columns with 57,301rows of observations.
 
-##### Immediate Observations
+### Immediate Observations
 
 ![](assets/null_check.png)
 
@@ -64,9 +64,27 @@ The dataset contains no `null` values. Which means all columns and all rows cont
 
 The dataset contains no duplicated rows, which means all records are unique.
 
-* [ ] ![](./assets/first_five.png)Inspecting the first five rows reveals that the `Plane Name` column contains `;` values, indicating that a single route may be operated using multiple aircraft types. This would require special handling during ETL to correctly extract individual plane types for query `d`.
+![](./assets/first_five.png)Inspecting the first five rows reveals that the `Plane Name` column contains `;` values, indicating that a single route may be operated using multiple aircraft types. This would require special handling during ETL to correctly extract individual plane types for query `d`.
 
 ## 3.2. Data Cleaning
+
+Based on the result of the initial inspections, the raw datasets are already clean of missing values and duplicates. However, additional cleaning checks were performed to ensure data consistency before generating the node and relationship CSVs.
+
+### Whitespace Check
+
+![](assets/whitespace_check.png)
+
+The whitespace check revealed that `Departure Airport City` and `Arrival Airport City` contained 4 and 5 values that contain leading or trailing whitespace respectively. These were then corrected by applying `str.strip()` to both columns.
+
+![](assets/whitespace_trim.png)
+
+### Case Inconsistencies Check
+
+![](assets/inconsistencies_check.png)
+
+Case inconsistency checks on key columns such as `Airline Name`, `Airline Country`, `Departure Airport Name`, `Arrival Airport Name`, `Departure Airport Country/Region`, and `Arrival Airport Country/Region` resulted in no issues found. No further transformation was required.
+
+* [ ] With these cleaning steps done, the dataset is now ready for node and relationship CSV generation.
 
 ## 3.3. Node CSV Generation
 
