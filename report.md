@@ -84,9 +84,34 @@ The whitespace check revealed that `Departure Airport City` and `Arrival Airport
 
 Case inconsistency checks on key columns such as `Airline Name`, `Airline Country`, `Departure Airport Name`, `Arrival Airport Name`, `Departure Airport Country/Region`, and `Arrival Airport Country/Region` resulted in no issues found. No further transformation was required.
 
-* [ ] With these cleaning steps done, the dataset is now ready for node and relationship CSV generation.
+With these cleaning steps done, the dataset was exported and ready to be used for node and relationship CSV generation.
 
 ## 3.3. Node CSV Generation
+
+The nodes generated from the raw datasets are `Airlines` and `Airports`. Before the nodes were created, the previously cleaned dataset was read again.
+
+![](assets/read_cleaned_data.png)
+
+### 3.3.1. `Airlines` Node
+
+`Airlines` node was designed to have information about the airline's name and the country it is based in. With that, the columns used to build the node are `Airline Name` and `Airline Country`.
+
+![](assets/airline_node.png)
+
+- `drop_duplicates()` is used to remove duplicates of `Airline Name-Airline Country` combination.
+- `reset_index(drop=True)` is used to reset the sequential order after removing the duplicates. The `drop=True` ensures that the old index is discarded rather than added as an extra column.
+
+### 3.3.2. `Airports` Node
+
+`Airport` node was designed to have information of an airport's name and its geographical location, such as the city and country it's located in. In order to make sure we have all the airports in the dataset, we will be combining the departure airports and the arrival airports.
+
+![](assets/airport_node.png)
+
+- `dep_airport` and `arr_airport` are created separately by extracting departure and arrival airport columns respectively, then renaming them to a consistent schema (name, city, country).
+- `pd.concat()` combines both DataFrames into one since airports appear on both sides of the dataset. An airport can be a departure airport in one row and an arrival airport in another.
+- `drop_duplicates()` ensures each unique airport only appears once in the final CSV.
+- reset_index(drop=True) resets the index to a clean sequential
+  order after concatenation and deduplication.
 
 ## 3.4. Relationship CSV Generation
 
