@@ -115,6 +115,25 @@ The nodes generated from the raw datasets are `Airlines` and `Airports`. Before 
 
 ## 3.4. Relationship CSV Generation
 
+The relationships developed from the raw dataset are: `ROUTES` and `OPERATES`.
+
+### 3.4.1. `ROUTES` Relationship
+
+`ROUTES` relationship was designed to capture the information about the route of a flight. From `Departure Airport Name` to `Arrival Airport Name`.
+
+![](assets/routes_rel.png)
+
+- `.drop_duplicates()` is used the resulting combinations of departure and arrival airports will have resulted in thousands of duplicated rows. This is because multiple airlines and planes can have the same flight routes.
+
+### 3.4.2. `OPERATES` Relationship
+
+`OPERATES` relationship was designed to contain information about the routes an airlines operates on and which of their planes are used for that specific service.
+
+![](assets/20260429_142706_image.png)
+
+- `drop_duplicates()` removes duplicate airline-route-plane combinations since the same service can appear multiple times in the raw dataset.
+- `plane_name` is retained as it is required for query `d`, which involves counting distinct aircraft types per airport pair.
+
 # 4. Graph Database Implementation
 
 ## 4.1. Neo4j Import
