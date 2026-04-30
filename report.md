@@ -43,18 +43,18 @@ Therefore, `country` was retained as a simple property on both `Airline` and `Ai
 
 ## 3.1. Dataset Overview
 
-### Data description by columns
+### 3.1.1. Data description by columns
 
 ![Code snippet of df.columns](./assets/column_names_check.png)
 Based on the snippet above, we can see that the dataset contains information about airline routes and the aircraft used to operate them. Each row of the dataset represents a specific route that the airline operates on, detailing the departure and arrival airports, the country each airport is lcoated in, and the aircraft types used for that route. Additional information includes the country in whicih the airline is based and the city of each airport.
 
-### Data structure
+### 3.1.2. Data structure
 
 ![Code snippet of df.shape](./assets/structure_check.png)
 
 Based on the snippet above we can see that the dataset has 9 columns with 57,301rows of observations.
 
-### Immediate Observations
+### 3.1.3. Immediate Observations
 
 ![](assets/null_check.png)
 
@@ -70,7 +70,7 @@ The dataset contains no duplicated rows, which means all records are unique.
 
 Based on the result of the initial inspections, the raw datasets are already clean of missing values and duplicates. However, additional cleaning checks were performed to ensure data consistency before generating the node and relationship CSVs.
 
-### Whitespace Check
+### 3.2.1. Whitespace Check
 
 ![](assets/whitespace_check.png)
 
@@ -78,7 +78,7 @@ The whitespace check revealed that `Departure Airport City` and `Arrival Airport
 
 ![](assets/whitespace_trim.png)
 
-### Case Inconsistencies Check
+### 3.2.2. Case Inconsistencies Check
 
 ![](assets/inconsistencies_check.png)
 
@@ -154,7 +154,7 @@ The relationships developed from the raw dataset are: `ROUTES` and `OPERATES`.
 
 ## 5.6. Query 6
 
-# 6. Self-Designed Queries
+# 6. Self-Designed Qu****eries
 
 ## 6.1. Self Query 1
 
