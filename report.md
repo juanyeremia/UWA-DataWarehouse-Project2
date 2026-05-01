@@ -15,7 +15,7 @@ The property graph consists of two node types and two relationship types.
 
 ##### Relationships
 
-- `OPERATES` - this relationship connects an `Airline` node to a departure `Airport` node, representing that the airline operates a route out of that airport. The `plane_name` property is stored [](https://)on this relationship as it describes the aircraft used for that specific service, which cannot be attributed to either the airline or airport alone.
+- `OPERATES` - this relationship connects an `Airline` node to a departure `Airport` node, representing that the airline operates a route out of that airport. The `plane_name` property is stored on this relationship as it describes the aircraft used for that specific service, which cannot be attributed to either the airline or airport alone.
 - `ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
 
 ## 2.2. Arrows App Diagram
@@ -152,9 +152,19 @@ Below are the Cypher commands to load the CSVs for the nodes and relationships:
 
 The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a CSV file and maps the values to node properties or relationship attributes.
 
-`MERGE` was used instead of `CREATE` when importing nodes to prevent duplicate nodes from being created. `CREATE` inserts a new node regardless of whether it already exists, whereas `MERGE` will check first if a node with the specified properties already exist in the database. If it does, it matches the existing one. If it doesn't it creates a new one. 
+`MERGE` was used instead of `CREATE` when importing nodes to prevent duplicate nodes from being created. `CREATE` inserts a new node regardless of whether it already exists, whereas `MERGE` will check first if a node with the specified properties already exist in the database. If it does, it matches the existing one. If it doesn't it creates a new one.
 
 ## 4.2. Database Statistics
+
+After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 2,783 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 89,789 relationships across two types, with 47,301 for `OPERATES` and 32,488 for `ROUTE`
+
+###### Node
+
+![](assets/node_stats.png)
+
+###### Relationship
+
+![](assets/rel_stats.png)
 
 # 5. Cypher Queries
 
@@ -170,7 +180,7 @@ The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a
 
 ## 5.6. Query 6
 
-# 6. Self-Designed Qu****eries
+# 6. Self-Designed Queries
 
 ## 6.1. Self Query 1
 
