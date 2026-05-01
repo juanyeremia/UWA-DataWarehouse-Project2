@@ -129,14 +129,30 @@ The relationships developed from the raw dataset are: `ROUTES` and `OPERATES`.
 
 `OPERATES` relationship was designed to contain information about the routes an airlines operates on and which of their planes are used for that specific service.
 
-![](assets/20260429_142706_image.png)
+![](assets/operates_rel.png)
 
 - `drop_duplicates()` removes duplicate airline-route-plane combinations since the same service can appear multiple times in the raw dataset.
 - `plane_name` is retained as it is required for query `d`, which involves counting distinct aircraft types per airport pair.
 
 # 4. Graph Database Implementation
 
-## 4.1. Neo4j Import
+## 4.1. Neo4j Import and Load CSV
+
+### 4.1.1. Import SV
+
+The generated CSV filese were copied into Neo4j `import` directory located at the Path shown in the picture below. Neo4j requires the files to be placed in the designated folder in order to be accessed by Cypher.
+
+![](assets/import_csv.png)
+
+### 4.1.2 Load CSV
+
+Below are the Cypher commands to load the CSVs for the nodes and relationships:
+
+![](assets/import_neo4j.png)
+
+The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a CSV file and maps the values to node properties or relationship attributes.
+
+`MERGE` was used instead of `CREATE` when importing nodes to prevent duplicate nodes from being created. `CREATE` inserts a new node regardless of whether it already exists, whereas `MERGE` will check first if a node with the specified properties already exist in the database. If it does, it matches the existing one. If it doesn't it creates a new one. 
 
 ## 4.2. Database Statistics
 
