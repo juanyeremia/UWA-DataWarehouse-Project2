@@ -16,7 +16,7 @@ The property graph consists of two node types and two relationship types.
 ##### Relationships
 
 - `OPERATES` - this relationship connects an `Airline` node to a departure `Airport` node, representing that the airline operates a route out of that airport. The `plane_name` property is stored on this relationship as it describes the aircraft used for that specific service, which cannot be attributed to either the airline or airport alone.
-- `ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
+`ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
 
 ## 2.2. Arrows App Diagram
 
@@ -168,9 +168,43 @@ After importing and loading the CSV files for the nodes and realtionships, the g
 
 # 5. Cypher Queries
 
+In this section, we will be writing the Cypher queries to answer the given 6 queries.
+
 ## 5.1. Query 1
 
+> List all distinct airline names where the airline's country is Australia
+
+The first query requires us to find the distinct names of the airlines where the country they're based in is Austalia
+
+##### Query:
+
+![](assets/query1.png)
+
+This query matches all `Airline` nodes where the `country` property is `Australia` and returns their distinct names. The result returned 3 Australian airlines:
+
+- Whyalla Airlines
+- Transpac Express
+- Transaustralian Air Express
+
 ## 5.2. Query 2
+
+> "How many route records are domestic, and how many are international? A route is domestic if the departure and arrival airports are in the same country/region."
+
+### 5.2.1. Domestic Routes
+
+![](assets/query2_domestic.png)
+
+This query traverses the `ROUTE` relationship between two `Airport` nodes. Since each `Airport` node stores a `country` property, we can compare the departure and arrival airport countries diectly.
+
+`WHERE dep.country = arr.country` filters the result to show only domestic routes, which returned **14,092 routes**.
+
+### 5.2.2. International Routes
+
+![](assets/query2_inter.png)
+
+This query traverses the `ROUTE` relationship between two `Airport` nodes. Since each `Airport` node stores a `country` property, we can compare the departure and arrival airport countries diectly.
+
+WHERE dep.country <> arr.country` filters the result to show only international routes, which returned **18,396 routes**.
 
 ## 5.3. Query 3
 
