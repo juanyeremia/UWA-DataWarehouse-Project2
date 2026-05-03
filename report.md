@@ -10,13 +10,13 @@ The property graph consists of two node types and two relationship types.
 
 ##### Nodes
 
-- `Airline` - representing a unique airline operation in the dataset. Each node stores the airline's `name` and `country` of ****registration as its properties.
+- `Airline` - representing a unique airline operation in the dataset. Each node stores the airline's `name` and `country` of registration as its properties.
 - `Airport` - representing a unique airport. Each node stores the airport's `name`, `city`, and `country` as properties.
 
 ##### Relationships
 
 - `OPERATES` - this relationship connects an `Airline` node to a departure `Airport` node, representing that the airline operates a route out of that airport. The `plane_name` property is stored on this relationship as it describes the aircraft used for that specific service, which cannot be attributed to either the airline or airport alone.
-`ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
+  `ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
 
 ## 2.2. Arrows App Diagram
 
@@ -148,7 +148,7 @@ The generated CSV filese were copied into Neo4j `import` directory located at th
 
 Below are the Cypher commands to load the CSVs for the nodes and relationships:
 
-![](assets/import_neo4j.png)
+![](assets/load_neo4j.png)
 
 The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a CSV file and maps the values to node properties or relationship attributes.
 
@@ -156,7 +156,7 @@ The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a
 
 ## 4.2. Database Statistics
 
-After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 2,783 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 89,789 relationships across two types, with 47,301 for `OPERATES` and 32,488 for `ROUTE`
+After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 2,783 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 63,223 relationships across two types, with 30,735 for `OPERATES` and 32,488 for `ROUTE`
 
 ###### Node
 
