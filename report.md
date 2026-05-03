@@ -148,7 +148,22 @@ The generated CSV filese were copied into Neo4j `import` directory located at th
 
 Below are the Cypher commands to load the CSVs for the nodes and relationships:
 
-![](assets/load_neo4j.png)
+###### `Airlines` Node
+
+![](assets/create_airlines.png)
+
+###### `Airports` Node
+
+![](assets/create_airports.png)
+
+###### `ROUTE` Relationship
+
+![](assets/create_route.png)
+
+###### `OPERATES` Relationship
+
+
+![](assets/20260503_225123_image.png)
 
 The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a CSV file and maps the values to node properties or relationship attributes.
 
