@@ -232,6 +232,16 @@ The results are grouped into `airport1`, `airport2`, and `records` that counts a
 
 ## 5.4. Query 4
 
+> Find the top 5 airport pairs that are served with the greatest number of distinct aircraft types across all rows and all airlines. Treat A→B and B→A as the same airport pair, and count distinct aircraft types across all rows for that pair.
+
+![](assets/query4.png)
+
+This query traverses the path from `Airline` to departure airport, via the `OPERATES` relationship, to arrival airport, via the `ROUTE` relationship. Plane information is stored in `OPERATES`, so we will access it and use `SPLIT` to turn them into a list, separated by `;`.  `UNWIND` was then used to turn each list elements as its own row, duplicating the other columns.
+
+Like the previous query, `CASE WHEN` was used to ensure routes `A -> B` is treated the same as `B -> A`. `TRIM(plane)` to remove any trailing white spaces from the plane list.
+
+Finally, we set the columns, and used `COUNT(DISTINCT plane)` to count unique values and then count the number plane types for each airport pair. This will return a number, which we will then sort `DESC` and take the top 5 result.
+
 ## 5.5. Query 5
 
 ## 5.6. Query 6
