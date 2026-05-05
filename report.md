@@ -162,7 +162,6 @@ Below are the Cypher commands to load the CSVs for the nodes and relationships:
 
 ###### `OPERATES` Relationship
 
-
 ![](assets/20260503_225123_image.png)
 
 The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a CSV file and maps the values to node properties or relationship attributes.
@@ -190,8 +189,6 @@ In this section, we will be writing the Cypher queries to answer the given 6 que
 > List all distinct airline names where the airline's country is Australia
 
 The first query requires us to find the distinct names of the airlines where the country they're based in is Austalia
-
-##### Query:
 
 ![](assets/query1.png)
 
@@ -222,6 +219,16 @@ This query traverses the `ROUTE` relationship between two `Airport` nodes. Since
 WHERE dep.country <> arr.country` filters the result to show only international routes, which returned **18,396 routes**.
 
 ## 5.3. Query 3
+
+> "Find the airport pair with the greatest number of records. Treat A→B and B→A as the same airport pair."
+
+![](assets/query3.png)
+
+This query traverses the lines from `Airline` to departure airport via the`OPERATES` relationship, then connects to arrival airport via the `ROUTE` relationship. This query uses the `WITH` query to chain multiple queries together.
+
+The `CASE WHEN` query compares the two airport names alphabetically, then put the "smaller" name as `airport` and the larger one as `airport2`. This ensures that Route `Perth -> Sydney` will always give the same result as `Sydney -> Perth`. `airport1` will be Perth and `airport2` will be Sydney.
+
+The results are grouped into `airport1`, `airport2`, and `records` that counts all occurences, then have only the first record shown, which would have the highest number of records. In this case, it is the route between **Charles de Gaulle International Airport and Hartsfield Jackson Atlanta International Airport** with **702 records** .
 
 ## 5.4. Query 4
 
