@@ -244,6 +244,12 @@ Finally, we set the columns, and used `COUNT(DISTINCT plane)` to count unique va
 
 ## 5.5. Query 5
 
+> Find all possible travel routes from Beijing Capital International Airport to Perth International Airport where at most 3 hops (i.e., at most 3 ROUTE relationships) are traversed. How many such distinct routes exist?
+
+![](assets/query5.png)
+
+This query uses a varying-length path traversal to find all possible routes between Beijing Capital International Airport and Perth International Airport. `[:ROUTE*1..3]` instructs neo4j to follow up to 3 `ROUTE` relationships to reach the destination. Each unique sequence of airports visited is treated as a distinct route. The query returned **650 distinct routes**.
+
 ## 5.6. Query 6
 
 # 6. Self-Designed Queries
