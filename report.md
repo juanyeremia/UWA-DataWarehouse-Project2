@@ -262,6 +262,14 @@ This query identifies the top 5 pairs of competing airlines based on the number 
 
 ## 6.1. Self Query 1
 
+> Which airport has the most IN and OUT `ROUTE` relationships?
+
+![](assets/self_query1.png)
+
+This self query was designed to find which airport has the most connections with other airports, both incoming and outgoing routes. The undirected relationship pattern `-[:ROUTE]-` traverses the `ROUTE` relationship in both directions, making sure an airport is counted regardless of whether it's the departure or arrival airport. `COUNT(DISTINCT other)` makes sure each connected airport is only counted once.
+
+Based on this query, **Charles de Gaulle International Airport** has the most connections with other aiports at **238 connections**, with **Istanbul Airport**and **Frankfurt am Main Airport** coming in close behind at both above 230 connections.
+
 ## 6.2. Self Query 2
 
 # 7. Graph Data Science Application
