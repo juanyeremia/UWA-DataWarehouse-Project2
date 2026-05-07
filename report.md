@@ -268,9 +268,28 @@ This query identifies the top 5 pairs of competing airlines based on the number 
 
 This self query was designed to find which airport has the most connections with other airports, both incoming and outgoing routes. The undirected relationship pattern `-[:ROUTE]-` traverses the `ROUTE` relationship in both directions, making sure an airport is counted regardless of whether it's the departure or arrival airport. `COUNT(DISTINCT other)` makes sure each connected airport is only counted once.
 
-Based on this query, **Charles de Gaulle International Airport** has the most connections with other aiports at **238 connections**, with **Istanbul Airport**and **Frankfurt am Main Airport** coming in close behind at both above 230 connections.
+Based on this query, **Charles de Gaulle International Airport**[](https://) has the most connections with other aiports at **238 connections**, with **Istanbul Airport**and **Frankfurt am Main Airport** coming in close behind at both above 230 connections.
 
 ## 6.2. Self Query 2
+
+> Find the numebr of distinct flight paths originating from Perth International Airport within 1 to 3 hops, categorized by domestic (paths that stay within Australia) and international (paths tha pass through at least one non-Australian airport).
+
+![](assets/self_query2.png)
+
+This query uses APOC's `apoc.path.expand` to do advanced path traversal from Perth International Airport. This method takes:
+
+- the start node,
+- a relationship filter (`ROUTE>` for outgoing ROUTE relationships),
+- a label filter (`+Airport` to whitelist Airport node),
+- and a minimum and maximum hop range (1 to 3)
+
+The `YIELD path` clause captures every path found.
+
+A `CASE WHEN ALL(...)` expression the categorizes each path. If all airports along the path is in Austrlia, the path is classified as `Domestic`, otherwise it will be `International`. The query groups by `flight_type` and `hops` to count the number of paths in each category.
+
+**Result:**
+
+This result show a clear contrast between domestic and international connectivity from Perth. Direct flights (1 hop) include 19 domestic and 16 international destinations. This indicates Perth's role as a major Australian gateway. At 2 hops, international paths grow signficantly from 134 domestic to 1,317 international, reflecting Perth's strong global reach. At 3 hops, international paths rose from 1,172 domestic to 76,261 international, which could be the result of compounding network effects through major global transits such as Singapore, Dubai, and Doha.
 
 # 7. Graph Data Science Application
 
