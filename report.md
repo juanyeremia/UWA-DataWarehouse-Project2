@@ -293,6 +293,15 @@ This result show a clear contrast between domestic and international connectivit
 
 # 7. Graph Data Science Application
 
+## 7.1. Application: Identifying Strategic Hub Airports
+
+A practical application of this airline graph database is the identification of strategically important airports within the global air transport network. Airlines, airport authorities, and aviation regulators frequently need to assess which airports play the most critical in the network based on volume of flights and by how essential the airports are to overall connectivity. Identifying these hubs can support the people responsible in makin decisions around infrastructure investment, route planning, security prioritization, and disruption analysis [1].
+
+## 7.2. Algorithm: PageRank
+
+
+## 7.3. Other Suitable Algorithms
+
 # 8. References
 
 # 9. Appendix - AI Usage
