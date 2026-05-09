@@ -299,6 +299,17 @@ A practical application of this airline graph database is the identification of 
 
 ## 7.2. Algorithm: PageRank
 
+The most suitable algorithm for hub identification is **PageRank**. Originally developed by Larry Page and Sergey Brin to rank Google search results [2]. The main idea is that a node (an airport) is considered important if many *other important nodes* connect to it. So an airport isn't just ranked by how many flights it receives but by *who* it receives flights from.
+
+If we apply this algorithm to the airline graph, each `Airport` would be a node and each `ROUTE` relationship would be a directed edge. The algorithm would then calculate a score. The algorithm would then calculate a score for every airport based on the number and importance of incoming routes. An airport that receives flights from many big hubs would score higher than airport that receives the same number of flights from small regional airports.
+
+This is more useful than just counting connections, which is what the self-designed query in this report did. For example, there might be two airports that both have 100 incoming flights, but one of them was connected to major global airports while the other is connected to small regional airports. **PageRank captures this difference by weighing the importance of connections, not just counting them**.
+
+In summary, PageRank fits airline networks well because:
+
+- Flights have a clear direction (departure -> arrival)m which the algorithm uses
+- Being connected to a major hub matters more than being connected to a small airport
+- It scales well to large networks with thousands of airports [3]
 
 ## 7.3. Other Suitable Algorithms
 
