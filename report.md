@@ -313,6 +313,27 @@ In summary, PageRank fits airline networks well because:
 
 ## 7.3. Other Suitable Algorithms
 
+Other graph algorithms relevant to airline networks include:
+
+* **Betweenness Centrality**
+  Measures how often an airport appears on the shortest path between other airports. Airports with high scores act as critical connectors, meaning if they were removed (for example, due to closure or disruption), many travel routes would be affected. This is useful for identifying which airports are essential for keeping the network connected [4].
+* **Community Detection (Louvain Algorithm)**
+  Groups airports into clusters based on how densely they are connected to each other. These clusters often match real-world patterns like regional networks or airline alliances. This is useful for understanding which airports operate as a "group" and can support decisions around partnerships or regional route planning [5].
+* **Shortest Path (Dijkstra's Algorithm)** 
+  Finds the most efficient route between two airports based on a chosen factor like distance, flight time, or cost. This is useful for travellers looking for the best connection options, or for airlines trying to plan optimal routing [6]
+
 # 8. References
+
+[1] R. Guimerà, S. Mossa, A. Turtschi, and L. A. N. Amaral, "The worldwide air transportation network: Anomalous centrality, community structure, and cities' global roles," Proc. Natl. Acad. Sci. U.S.A., vol. 102, no. 22, pp. 7794–7799, May 2005.
+
+[2] L. Page, S. Brin, R. Motwani, and T. Winograd, "The PageRank citation ranking: Bringing order to the web," Stanford InfoLab, Tech. Rep. 1999-66, 1999.
+
+[3] Neo4j, "PageRank — Neo4j Graph Data Science," Neo4j Documentation. [Online]. Available: https://neo4j.com/docs/graph-data-science/current/algorithms/page-rank/
+
+[4] U. Brandes, "A faster algorithm for betweenness centrality," J. Math. Sociol., vol. 25, no. 2, pp. 163–177, 2001.
+
+[5] V. D. Blondel, J.-L. Guillaume, R. Lambiotte, and E. Lefebvre, "Fast unfolding of communities in large networks," J. Stat. Mech., vol. 2008, no. 10, p. P10008, Oct. 2008.
+
+[6] E. W. Dijkstra, "A note on two problems in connexion with graphs," Numer. Math., vol. 1, no. 1, pp. 269–271, Dec. 1959.
 
 # 9. Appendix - AI Usage
