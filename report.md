@@ -170,7 +170,7 @@ The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a
 
 ## 4.2. Database Statistics
 
-After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 2,783 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 63,223 relationships across two types, with 30,735 for `OPERATES` and 32,488 for `ROUTE`
+After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 2,783 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 63,223 relationships across two types, with 57,301 for `OPERATES` and 32,488 for `ROUTE`
 
 ###### Node
 
@@ -319,7 +319,7 @@ Other graph algorithms relevant to airline networks include:
   Measures how often an airport appears on the shortest path between other airports. Airports with high scores act as critical connectors, meaning if they were removed (for example, due to closure or disruption), many travel routes would be affected. This is useful for identifying which airports are essential for keeping the network connected [4].
 * **Community Detection (Louvain Algorithm)**
   Groups airports into clusters based on how densely they are connected to each other. These clusters often match real-world patterns like regional networks or airline alliances. This is useful for understanding which airports operate as a "group" and can support decisions around partnerships or regional route planning [5].
-* **Shortest Path (Dijkstra's Algorithm)** 
+* **Shortest Path (Dijkstra's Algorithm)**
   Finds the most efficient route between two airports based on a chosen factor like distance, flight time, or cost. This is useful for travellers looking for the best connection options, or for airlines trying to plan optimal routing [6]
 
 # 8. References
