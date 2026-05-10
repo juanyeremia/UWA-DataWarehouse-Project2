@@ -2,6 +2,17 @@
 
 # 1. Introduction
 
+This report documents the design and implementation of a graph database for analyzing global airline route data, completed as Project 2 for CITS5504 Data Warehousing.
+
+This project covers:
+
+- the design of property graph using the Arrows App,
+- the ETL process to clean and transform raw dataset into nodes and relationship CSVs using Python and pandas,
+- the implementation of graph database in Neo4j,
+- and the executions of Cypher queries to answer specific business questions about airline operations and airport connectivity.
+
+This report also includes self-designed queries demonstrating the use of APOC procedures, and a discussion of how Graph Data Science algorithms could be applied to derive further insights
+
 # 2. Graph Database Design
 
 ## 2.1. Design Overview
