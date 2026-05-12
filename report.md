@@ -13,6 +13,8 @@ This project covers:
 
 This report also includes self-designed queries demonstrating the use of APOC procedures, and a discussion of how Graph Data Science algorithms could be applied to derive further insights
 
+---
+
 # 2. Graph Database Design
 
 ## 2.1. Design Overview
@@ -27,7 +29,7 @@ The property graph consists of two node types and two relationship types.
 ##### Relationships
 
 - `OPERATES` - this relationship connects an `Airline` node to a departure `Airport` node, representing that the airline operates a route out of that airport. The `plane_name` property is stored on this relationship as it describes the aircraft used for that specific service, which cannot be attributed to either the airline or airport alone.
-  `ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
+- `ROUTE` - this relationship connects a departure `Airport` node to an arrival `Airport` node, representing that a direct connection exists between the two airports. This relationship carries no properties as it solely captures airport connectivity.
 
 ## 2.2. Arrows App Diagram
 
@@ -40,15 +42,17 @@ The property graph consists of two node types and two relationship types.
 
 The dataset only provides city and country names as plain text values with no additional attributes such as continent, population, or country code. Creating a dedicated `Location` node would only add unnecessary complexity to the graph without providing meaningful additional value for querying.
 
-Therefore, `country` was retained as a simple property on both `Airline` and `Airport` nodes. The downside is that location-based queries ****rely on property matching (ex: `WHERE a.country = 'Australia'`) rather than relationship traversal, which makes the graph looking very simple but functionally equivalent for the dataset.
+Therefore, `country` was retained as a simple property on both `Airline` and `Airport` nodes. The downside is that location-based queries rely on property matching (ex: `WHERE a.country = 'Australia'`) rather than relationship traversal, which makes the graph looking very simple but functionally equivalent for the dataset.
 
-#### 2. Having a separate `ROUTE` relationship instead of just `OPERATES`
+##### 2. Having a separate `ROUTE` relationship instead of just `OPERATES`
 
 `OPERATES` only connects `Airline -> Airport`. It will only tell us which airline flies out of which airport. But specifically for query `e` (flight between Beijing and Perth), we will need an `Airport -> Airport` relationship. Without `ROUTE`, Cypher won't be able to jump between airports directly. It would have to go through airline nodes every time.
 
 ##### 3. Putting `plane_name` property on `OPERATES`
 
 `plane_name` is stored as a property on the `OPERATES` relationship as it is required for query `d`, which involves counting distinct aircraft types per airport pair. It is not store on `Airline` or `Airport` because it describes the specific service operated between an airline and an airport, and can't be meaningfully attributed to either entity independently.
+
+---
 
 # 3. ETL Process
 
@@ -145,6 +149,8 @@ The relationships developed from the raw dataset are: `ROUTES` and `OPERATES`.
 - `drop_duplicates()` removes duplicate airline-route-plane combinations since the same service can appear multiple times in the raw dataset.
 - `plane_name` is retained as it is required for query `d`, which involves counting distinct aircraft types per airport pair.
 
+---
+
 # 4. Graph Database Implementation
 
 ## 4.1. Neo4j Import and Load CSV
@@ -191,11 +197,13 @@ After importing and loading the CSV files for the nodes and realtionships, the g
 
 ![](assets/rel_stats.png)
 
+---
+
 # 5. Cypher Queries
 
 In this section, we will be writing the Cypher queries to answer the given 6 queries.
 
-## 5.1. Query 1
+## 5.1. Query A
 
 > List all distinct airline names where the airline's country is Australia
 
@@ -209,7 +217,7 @@ This query matches all `Airline` nodes where the `country` property is `Australi
 - Transpac Express
 - Transaustralian Air Express
 
-## 5.2. Query 2
+## 5.2. Query B
 
 > "How many route records are domestic, and how many are international? A route is domestic if the departure and arrival airports are in the same country/region."
 
@@ -227,21 +235,21 @@ This query traverses the `ROUTE` relationship between two `Airport` nodes. Since
 
 This query traverses the `ROUTE` relationship between two `Airport` nodes. Since each `Airport` node stores a `country` property, we can compare the departure and arrival airport countries diectly.
 
-WHERE dep.country <> arr.country` filters the result to show only international routes, which returned **18,396 routes**.
+`WHERE dep.country <> arr.country` filters the result to show only international routes, which returned **18,396 routes**.
 
-## 5.3. Query 3
+## 5.3. Query C
 
 > "Find the airport pair with the greatest number of records. Treat A→B and B→A as the same airport pair."
 
 ![](assets/query3.png)
 
-This query traverses the lines from `Airline` to departure airport via the`OPERATES` relationship, then connects to arrival airport via the `ROUTE` relationship. This query uses the `WITH` query to chain multiple queries together.
+This query traverses the path from `Airline` to departure airport via the`OPERATES` relationship, then connects to arrival airport via the `ROUTE` relationship. This query uses the `WITH` query to chain multiple queries together.
 
-The `CASE WHEN` query compares the two airport names alphabetically, then put the "smaller" name as `airport` and the larger one as `airport2`. This ensures that Route `Perth -> Sydney` will always give the same result as `Sydney -> Perth`. `airport1` will be Perth and `airport2` will be Sydney.
+The `CASE WHEN` query compares the two airport names alphabetically, then put the "smaller" name as `airport1` and the larger one as `airport2`. This ensures that Route `Perth -> Sydney` will always give the same result as `Sydney -> Perth`. `airport1` will be Perth and `airport2` will be Sydney.
 
-The results are grouped into `airport1`, `airport2`, and `records` that counts all occurences, then have only the first record shown, which would have the highest number of records. In this case, it is the route between **Charles de Gaulle International Airport and Hartsfield Jackson Atlanta International Airport** with **702 records** .
+The results are grouped into `airport1`, `airport2`, and `records` that counts all occurences, then have only the first record shown, which would ha[](https://)ve the highest number of records. In this case, it is the route between **Charles de Gaulle International Airport and Hartsfield Jackson Atlanta International Airport** with **702 records** .
 
-## 5.4. Query 4
+## 5.4. Query D
 
 > Find the top 5 airport pairs that are served with the greatest number of distinct aircraft types across all rows and all airlines. Treat A→B and B→A as the same airport pair, and count distinct aircraft types across all rows for that pair.
 
@@ -253,21 +261,23 @@ Like the previous query, `CASE WHEN` was used to ensure routes `A -> B` is treat
 
 Finally, we set the columns, and used `COUNT(DISTINCT plane)` to count unique values and then count the number plane types for each airport pair. This will return a number, which we will then sort `DESC` and take the top 5 result.
 
-## 5.5. Query 5
+## 5.5. Query E
 
-> Find all possible travel routes from Beijing Capital International Airport to Perth International Airport where at most 3 hops (i.e., at most 3 ROUTE relationships) are traversed. How many such distinct routes exist?
+> Find all possible travel routes from Beijing Capital International Airport to Perth International Airport where at most 3 hops (at most 3 ROUTE relationships) are traversed. How many such distinct routes exist?
 
 ![](assets/query5.png)
 
 This query uses a varying-length path traversal to find all possible routes between Beijing Capital International Airport and Perth International Airport. `[:ROUTE*1..3]` instructs neo4j to follow up to 3 `ROUTE` relationships to reach the destination. Each unique sequence of airports visited is treated as a distinct route. The query returned **650 distinct routes**.
 
-## 5.6. Query 6
+## 5.6. Query F
 
 > Find the top 5 pairs of airlines that compete head-to-head on the greatest number of shared routes. Two airlines are considered competitors if they both operate between the same two airports, regardless of direction. Return the airline pair names and the number of routes they share.
 
 ![](assets/query6.png)
 
 This query identifies the top 5 pairs of competing airlines based on the number of shared routes. SAM Columbia and Zantom International Airlines has the lead, with 793 shared routes, significantly more than the second through fifth pairs. Sham Wing Airlines and Sheremetyevo-Cargo both appear twice in the top 5, indicating that they are highly competitive carriers operating across many shared routes with multiple airlines.
+
+---
 
 # 6. Self-Designed Queries
 
@@ -300,7 +310,9 @@ A `CASE WHEN ALL(...)` expression the categorizes each path. If all airports alo
 
 **Result:**
 
-This result show a clear contrast between domestic and international connectivity from Perth. Direct flights (1 hop) include 19 domestic and 16 international destinations. This indicates Perth's role as a major Australian gateway. At 2 hops, international paths grow signficantly from 134 domestic to 1,317 international, reflecting Perth's strong global reach. At 3 hops, international paths rose from 1,172 domestic to 76,261 international, which could be the result of compounding network effects through major global transits such as Singapore, Dubai, and Doha.
+This result show a clear contrast between domestic and international connectivity from Perth. Direct flights (1 hop) include 19 domestic and 16 international destinations. This indicates Perth's role as a major Australian gateway. At 2 hops, international paths grow signficantly to 134 domestic and 1,317 international, reflecting Perth's strong global reach. At 3 hops, international paths become 1,172 domestic and 76,261 international, which could be the result of compounding network effects through major global transits such as Singapore, Dubai, and Doha.
+
+---
 
 # 7. Graph Data Science Application
 
@@ -333,6 +345,8 @@ Other graph algorithms relevant to airline networks include:
 * **Shortest Path (Dijkstra's Algorithm)**
   Finds the most efficient route between two airports based on a chosen factor like distance, flight time, or cost. This is useful for travellers looking for the best connection options, or for airlines trying to plan optimal routing [6]
 
+---
+
 # 8. References
 
 [1] R. Guimerà, S. Mossa, A. Turtschi, and L. A. N. Amaral, "The worldwide air transportation network: Anomalous centrality, community structure, and cities' global roles," Proc. Natl. Acad. Sci. U.S.A., vol. 102, no. 22, pp. 7794–7799, May 2005.
@@ -347,4 +361,32 @@ Other graph algorithms relevant to airline networks include:
 
 [6] E. W. Dijkstra, "A note on two problems in connexion with graphs," Numer. Math., vol. 1, no. 1, pp. 269–271, Dec. 1959.
 
+---
+
 # 9. Appendix - AI Usage
+
+Generative AI (Claude by Anthropic) was used throughout the creation of this project as a learning aid by providing additional insights, pointing out logic flaws, and suggesting improvements to make sure all queries can be answered by the graph database design.
+
+## Tasks where AI was used:
+
+* Discussing graph design choices (nodes, relationships, properties)
+* Insights on graph database concepts (ecx relationship traversal, `MERGE` vs `CREATE`, variable-length paths)
+* General debugging during ETL development and Neo4j graph database creation, including troubleshooting failed imports and resolving errors
+* Debugging and refinement of Cypher queries (especially queries c, d, e, and f)
+* Refining the report's written explanations
+* Reviewing analysis sections and suggesting more professional wording where appropriate
+* Discussion about graph algorithms for the Graph Data Science section
+
+## Suggestions accepted:
+
+* Including a`ROUTE` a relationship between Airport nodes. Accepted because it directly enables variable-length path traversal needed for query e
+* Storing`plane_name` as a property on`OPERATES` rather than on`Airline`. Accepted as it correctly reflects that aircraft type is a property of a specific service rather than the airline itself
+* Using the chained pattern`(Airline)-[:OPERATES]->(dep)-[:ROUTE]->(arr)` for queries c and d. Accepted as the more graph-idiomatic approach over storing arrival airport as a string property
+* Using`apoc.path.expand` for the APOC self-designed query. Accepted as it provides the filter capabilities needed to categorise paths by domestic vs international
+* Suggestions for more professional wording in the report's explanations and analysis sections. Accepted to improve clarity and academic tone
+
+## Suggestions rejected or modified:
+
+* An initial design that included a separate`Location` node was rejected because the dataset did not contain enough country-level metadata to justify the added complexity. Country was instead retained as a property on Airline and Airport nodes instead.
+* An initial suggestion to omit`arrival_airport` from`OPERATES` was rejected after evaluating its impact on query f, which became significantly harder to write efficiently. The property was retained.
+* Suggestions to use`COUNT(*)` for query f were modified to use`COUNT(DISTINCT [airport1, airport2])` for more accurate counting of shared routes.
