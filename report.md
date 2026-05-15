@@ -13,8 +13,6 @@ This project covers:
 
 This report also includes self-designed queries demonstrating the use of APOC procedures, and a discussion of how Graph Data Science algorithms could be applied to derive further insights
 
----
-
 # 2. Graph Database Design
 
 ## 2.1. Design Overview
@@ -34,7 +32,6 @@ The property graph consists of two node types and two relationship types.
 ## 2.2. Arrows App Diagram
 
 ![Graph Database Design](./assets/database_design.png)
-**Figure 1**. Graph Database Design
 
 ## 2.3. Design Choices and Discussion
 
@@ -51,8 +48,6 @@ Therefore, `country` was retained as a simple property on both `Airline` and `Ai
 ##### 3. Putting `plane_name` property on `OPERATES`
 
 `plane_name` is stored as a property on the `OPERATES` relationship as it is required for query `d`, which involves counting distinct aircraft types per airport pair. It is not store on `Airline` or `Airport` because it describes the specific service operated between an airline and an airport, and can't be meaningfully attributed to either entity independently.
-
----
 
 # 3. ETL Process
 
@@ -149,8 +144,6 @@ The relationships developed from the raw dataset are: `ROUTES` and `OPERATES`.
 - `drop_duplicates()` removes duplicate airline-route-plane combinations since the same service can appear multiple times in the raw dataset.
 - `plane_name` is retained as it is required for query `d`, which involves counting distinct aircraft types per airport pair.
 
----
-
 # 4. Graph Database Implementation
 
 ## 4.1. Neo4j Import and Load CSV
@@ -196,8 +189,6 @@ After importing and loading the CSV files for the nodes and realtionships, the g
 ###### Relationship
 
 ![](assets/rel_stats.png)
-
----
 
 # 5. Cypher Queries
 
@@ -277,8 +268,6 @@ This query uses a varying-length path traversal to find all possible routes betw
 
 This query identifies the top 5 pairs of competing airlines based on the number of shared routes. SAM Colombia and Zantop International Airlines has the lead, with 793 shared routes, significantly more than the second through fifth pairs. Sham Wing Airlines and Sheremetyevo-Cargo each appear twice in the top 5, indicating that they are highly competitive carriers operating across many shared routes with multiple airlines.
 
----
-
 # 6. Self-Designed Queries
 
 ## 6.1. Self Query 1
@@ -312,8 +301,6 @@ A `CASE WHEN ALL(...)` expression the categorizes each path. If all airports alo
 
 This result shows a clear contrast between domestic and international connectivity from Perth. Direct flights (1 hop) include 19 domestic and 16 international destinations. This indicates Perth's role as a major Australian gateway. At 2 hops, international paths grow signficantly to 134 domestic and 1,317 international, reflecting Perth's strong global reach. At 3 hops, international paths become 1,172 domestic and 76,261 international, which could be the result of compounding network effects through major global transits such as Singapore, Dubai, and Doha.
 
----
-
 # 7. Graph Data Science Application
 
 ## 7.1. Application: Identifying Strategic Hub Airports
@@ -345,9 +332,59 @@ Other graph algorithms relevant to airline networks include:
 * **Shortest Path (Dijkstra's Algorithm)**
   Finds the most efficient route between two airports based on a chosen factor like distance, flight time, or cost. This is useful for travellers looking for the best connection options, or for airlines trying to plan optimal routing [6]
 
----
+# 8. Metadata
 
-# 8. References
+To obtain our data's metadata, we can use `db.schema.visualiziation()` to see what our data looks like.
+
+![](assets/metadata.png)
+
+As we can see, the graph produced by Neo4J mirrors the graph database design using Arrows app back in section 2. There are 2 nodes and 2 relationships. The nodes are `Airline` and `Airport`, and the relationships are `OPERATES` and `ROUTE`. All airlines in the database are represented as one of the `Airline` node. All airports in the database are represented as one of the `Airport` nodes.
+
+###### Nodes:
+
+- `Airline` - all airlines are represented as one of this node
+- `Airport` - all airport are represented as one of this node
+
+###### Relationship:
+
+- `OPERATES`- connects Airline to Airport, describing "this airlines operates on this airport"
+- `ROUTE` - self-loop, describing connection between one airport with another
+
+## 8.1. Why is metadata important when designing?
+
+Metadata refers to the structural information the database maintains about itself, like node labels, relationship types, property keys, indexes, and constraints. Every label and property created during the ETL process is automatically registered as metadata. There are three points that explains why metadata is an important consdieration during design:
+
+### 1. Determines what questions can be asked and answered
+
+What we decide to put on which node or relationship shapes the questions we can answer. In the project, putting `plane_name` on `OPERATES` (instead of `Airline`) is what made query D possible, since aircraft type varies per route.
+
+Having `ROUTE` as a separate relationship also made query E's variable-length path `[:ROUTE*1..3]` possible. Without it, cypher wouldn't be able to jump airport-to-airport directly.
+
+### 2. Supports performance and integrity through indexes and constraints
+
+Indexes and constraints are also parth of the metadata layer. An index on `Airport.name` lets `MATCH (a:Airport {name:...}` find an airport instantly instead of scanning thousands of node. This helps answering queries C, D, E, and F where airport-name lookups dominate.
+
+### 3. Metada acts as documentation
+
+Once a graph is implemented, the metadata becomes its documentaiton. Running `CALL db.schema.visualization()` produces an image of the structure, as shown above, allowing anyone joining the project to understand the graph's design without reading the entire ETL pipeline.
+
+## 8.2. How Metadata Leverages Developers
+
+Once the database is populated, its metadata becomes a tool for writing more effective and efficient queries. Neo4j provides built-in procedures and the APOC library for inspecting the live schema, which is useful for understanding an unfamiliar graph, validating query assumptions, and planning for performance [8].
+
+### 1. Schmea inspection for understabdibg the graph
+
+Running `CALL db.schema.visualization()` returns a visual summary of all node labels and how they connect. For this project, the result, shown above. confirm two node types of `Airline` and `Airport`, and two relationship types of `OPERATES` from Airline to Airport, and `ROUTE` between Airports. This is enough to verify that the chained pattern `(Airline)-[:OPERATES]->(Airport)-[:ROUTE]->(Airport)` used in queries C, D, and F is actually valid before writing them.
+
+### 2. Validating property keys before writing WHERE clauses
+
+Cypher does not throw an error when a query references a property that doesn't exist. Instead it simply returns no results, which can be misleading during debugging. Running `CALL db.schema.nodeTypeProperties()` or `CALL apoc.meta.schema()` lists the actual properties stored on each label, confirming, for example, that `plane_name` lives on `OPERATES` (not on `Airline`), and that `Airport` carries `name`, `city`, and `country`.
+
+### 3. Identifying indexes to plan performance
+
+Indexes are stored as metadata and can be inspected with `SHOW INDEXES`. Knowing which properties are indexed lets query writers prefer those properties for filtering. In our project, most queries filter by `Airport.name` (queries C, E, and F all start from a named airport), so an index on `Airport.name` would let `MATCH` locate the starting airport directly instead of scanning all 2,795 nodes [9]. APOC's `apoc.meta.schema()` returns indexed-property information alongside property counts, making it convenient for spotting potential query bottlenecks at a glance.
+
+# 9. References
 
 [1] R. Guimerà, S. Mossa, A. Turtschi, and L. A. N. Amaral, "The worldwide air transportation network: Anomalous centrality, community structure, and cities' global roles," Proc. Natl. Acad. Sci. U.S.A., vol. 102, no. 22, pp. 7794–7799, May 2005.
 
@@ -361,13 +398,17 @@ Other graph algorithms relevant to airline networks include:
 
 [6] E. W. Dijkstra, "A note on two problems in connexion with graphs," Numer. Math., vol. 1, no. 1, pp. 269–271, Dec. 1959.
 
----
+[7] I. Robinson, J. Webber, and E. Eifrem, *Graph Databases* , 2nd ed. Sebastopol, CA: O'Reilly Media, 2015.
 
-# 9. Appendix - AI Usage
+[8] Neo4j, "APOC User Guide — apoc.meta," Neo4j Documentation. [Online]. Available: [https://neo4j.com/labs/apoc/4.4/overview/apoc.meta/](https://neo4j.com/labs/apoc/4.4/overview/apoc.meta/)
+
+[9] Neo4j, "Indexes for search performance — Cypher Manual," Neo4j Documentation. [Online]. Available: [https://neo4j.com/docs/cypher-manual/current/indexes/](https://neo4j.com/docs/cypher-manual/current/indexes/)
+
+# 10. Appendix - AI Usage
 
 Generative AI (Claude by Anthropic) was used throughout the creation of this project as a learning aid by providing additional insights, pointing out logic flaws, and suggesting improvements to make sure all queries can be answered by the graph database design.
 
-## Tasks where AI was used:
+## 10.1. Tasks where AI was used:
 
 * Discussing graph design choices (nodes, relationships, properties)
 * Insights on graph database concepts (ecx relationship traversal, `MERGE` vs `CREATE`, variable-length paths)
@@ -376,8 +417,9 @@ Generative AI (Claude by Anthropic) was used throughout the creation of this pro
 * Refining the report's written explanations
 * Reviewing analysis sections and suggesting more professional wording where appropriate
 * Discussion about graph algorithms for the Graph Data Science section
+* Discussion about metadata for the Metadata section
 
-## Suggestions accepted:
+## 10.2. Suggestions accepted:
 
 * Including a`ROUTE` a relationship between Airport nodes. Accepted because it directly enables variable-length path traversal needed for query e
 * Storing`plane_name` as a property on`OPERATES` rather than on`Airline`. Accepted as it correctly reflects that aircraft type is a property of a specific service rather than the airline itself
@@ -385,7 +427,7 @@ Generative AI (Claude by Anthropic) was used throughout the creation of this pro
 * Using`apoc.path.expand` for the APOC self-designed query. Accepted as it provides the filter capabilities needed to categorise paths by domestic vs international
 * Suggestions for more professional wording in the report's explanations and analysis sections. Accepted to improve clarity and academic tone
 
-## Suggestions rejected or modified:
+## 10.3. Suggestions rejected or modified:
 
 * An initial design that included a separate`Location` node was rejected because the dataset did not contain enough country-level metadata to justify the added complexity. Country was instead retained as a property on Airline and Airport nodes instead.
 * An initial suggestion to omit`arrival_airport` from`OPERATES` was rejected after evaluating its impact on query f, which became significantly harder to write efficiently. The property was retained.
