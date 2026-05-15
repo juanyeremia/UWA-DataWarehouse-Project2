@@ -155,7 +155,7 @@ The relationships developed from the raw dataset are: `ROUTES` and `OPERATES`.
 
 ## 4.1. Neo4j Import and Load CSV
 
-### 4.1.1. Import SV
+### 4.1.1. Import CSV
 
 The generated CSV filese were copied into Neo4j `import` directory located at the Path shown in the picture below. Neo4j requires the files to be placed in the designated folder in order to be accessed by Cypher.
 
@@ -187,7 +187,7 @@ The `LOAD CSV WITH HEADERS` was used to load the CSVs, which reads each row of a
 
 ## 4.2. Database Statistics
 
-After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 2,783 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 63,223 relationships across two types, with 57,301 for `OPERATES` and 32,488 for `ROUTE`
+After importing and loading the CSV files for the nodes and realtionships, the graph database was verified to contain the expected the number of nodes and relationships. As shown in the screenshots below, the database contains 3,283 nodes across the two labels, with 488 nodes for `Airline` and 2,795 nodes for `Airport`, and 89,789 relationships across two types, with 57,301 for `OPERATES` and 32,488 for `ROUTE`
 
 ###### Node
 
@@ -247,7 +247,7 @@ This query traverses the path from `Airline` to departure airport via the`OPERAT
 
 The `CASE WHEN` query compares the two airport names alphabetically, then put the "smaller" name as `airport1` and the larger one as `airport2`. This ensures that Route `Perth -> Sydney` will always give the same result as `Sydney -> Perth`. `airport1` will be Perth and `airport2` will be Sydney.
 
-The results are grouped into `airport1`, `airport2`, and `records` that counts all occurences, then have only the first record shown, which would ha[](https://)ve the highest number of records. In this case, it is the route between **Charles de Gaulle International Airport and Hartsfield Jackson Atlanta International Airport** with **702 records** .
+The results are grouped into `airport1`, `airport2`, and `records` that counts all occurences, then have only the first record shown, which would have the highest number of records. In this case, it is the route between **Charles de Gaulle International Airport and Hartsfield Jackson Atlanta International Airport** with **702 records** .
 
 ## 5.4. Query D
 
@@ -275,7 +275,7 @@ This query uses a varying-length path traversal to find all possible routes betw
 
 ![](assets/query6.png)
 
-This query identifies the top 5 pairs of competing airlines based on the number of shared routes. SAM Columbia and Zantom International Airlines has the lead, with 793 shared routes, significantly more than the second through fifth pairs. Sham Wing Airlines and Sheremetyevo-Cargo both appear twice in the top 5, indicating that they are highly competitive carriers operating across many shared routes with multiple airlines.
+This query identifies the top 5 pairs of competing airlines based on the number of shared routes. SAM Colombia and Zantop International Airlines has the lead, with 793 shared routes, significantly more than the second through fifth pairs. Sham Wing Airlines and Sheremetyevo-Cargo each appear twice in the top 5, indicating that they are highly competitive carriers operating across many shared routes with multiple airlines.
 
 ---
 
@@ -289,7 +289,7 @@ This query identifies the top 5 pairs of competing airlines based on the number 
 
 This self query was designed to find which airport has the most connections with other airports, both incoming and outgoing routes. The undirected relationship pattern `-[:ROUTE]-` traverses the `ROUTE` relationship in both directions, making sure an airport is counted regardless of whether it's the departure or arrival airport. `COUNT(DISTINCT other)` makes sure each connected airport is only counted once.
 
-Based on this query, **Charles de Gaulle International Airport**[](https://) has the most connections with other aiports at **238 connections**, with **Istanbul Airport**and **Frankfurt am Main Airport** coming in close behind at both above 230 connections.
+Based on this query, **Charles de Gaulle International Airport** has the most connections with other aiports at **238 connections**, with **Istanbul Airport**and **Frankfurt am Main Airport** coming in close behind at both above 230 connections.
 
 ## 6.2. Self Query 2
 
@@ -306,11 +306,11 @@ This query uses APOC's `apoc.path.expand` to do advanced path traversal from Per
 
 The `YIELD path` clause captures every path found.
 
-A `CASE WHEN ALL(...)` expression the categorizes each path. If all airports along the path is in Austrlia, the path is classified as `Domestic`, otherwise it will be `International`. The query groups by `flight_type` and `hops` to count the number of paths in each category.
+A `CASE WHEN ALL(...)` expression the categorizes each path. If all airports along the path are in Austrlia, the path is classified as `Domestic`, otherwise it will be `International`. The query groups by `flight_type` and `hops` to count the number of paths in each category.
 
 **Result:**
 
-This result show a clear contrast between domestic and international connectivity from Perth. Direct flights (1 hop) include 19 domestic and 16 international destinations. This indicates Perth's role as a major Australian gateway. At 2 hops, international paths grow signficantly to 134 domestic and 1,317 international, reflecting Perth's strong global reach. At 3 hops, international paths become 1,172 domestic and 76,261 international, which could be the result of compounding network effects through major global transits such as Singapore, Dubai, and Doha.
+This result shows a clear contrast between domestic and international connectivity from Perth. Direct flights (1 hop) include 19 domestic and 16 international destinations. This indicates Perth's role as a major Australian gateway. At 2 hops, international paths grow signficantly to 134 domestic and 1,317 international, reflecting Perth's strong global reach. At 3 hops, international paths become 1,172 domestic and 76,261 international, which could be the result of compounding network effects through major global transits such as Singapore, Dubai, and Doha.
 
 ---
 
@@ -324,13 +324,13 @@ A practical application of this airline graph database is the identification of 
 
 The most suitable algorithm for hub identification is **PageRank**. Originally developed by Larry Page and Sergey Brin to rank Google search results [2]. The main idea is that a node (an airport) is considered important if many *other important nodes* connect to it. So an airport isn't just ranked by how many flights it receives but by *who* it receives flights from.
 
-If we apply this algorithm to the airline graph, each `Airport` would be a node and each `ROUTE` relationship would be a directed edge. The algorithm would then calculate a score. The algorithm would then calculate a score for every airport based on the number and importance of incoming routes. An airport that receives flights from many big hubs would score higher than airport that receives the same number of flights from small regional airports.
+If we apply this algorithm to the airline graph, each `Airport` would be a node and each `ROUTE` relationship would be a directed edge. The algorithm would then calculate a score for every airport based on the number and importance of incoming routes. An airport that receives flights from many big hubs would score higher than airport that receives the same number of flights from small regional airports.
 
 This is more useful than just counting connections, which is what the self-designed query in this report did. For example, there might be two airports that both have 100 incoming flights, but one of them was connected to major global airports while the other is connected to small regional airports. **PageRank captures this difference by weighing the importance of connections, not just counting them**.
 
 In summary, PageRank fits airline networks well because:
 
-- Flights have a clear direction (departure -> arrival)m which the algorithm uses
+- Flights have a clear direction (departure -> arrival) which the algorithm uses
 - Being connected to a major hub matters more than being connected to a small airport
 - It scales well to large networks with thousands of airports [3]
 
