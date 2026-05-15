@@ -340,7 +340,7 @@ To obtain our data's metadata, we can use `db.schema.visualiziation()` to see wh
 
 As we can see, the graph produced by Neo4J mirrors the graph database design using Arrows app back in section 2. There are 2 nodes and 2 relationships. The nodes are `Airline` and `Airport`, and the relationships are `OPERATES` and `ROUTE`. All airlines in the database are represented as one of the `Airline` node. All airports in the database are represented as one of the `Airport` nodes.
 
-###### Nodes:
+###### Nodes:[](https://)
 
 - `Airline` - all airlines are represented as one of this node
 - `Airport` - all airport are represented as one of this node
@@ -352,7 +352,7 @@ As we can see, the graph produced by Neo4J mirrors the graph database design usi
 
 ## 8.1. Why is metadata important when designing?
 
-Metadata refers to the structural information the database maintains about itself, like node labels, relationship types, property keys, indexes, and constraints. Every label and property created during the ETL process is automatically registered as metadata. There are three points that explains why metadata is an important consdieration during design:
+Metadata refers to the structural information the database maintains about itself, like node labels, relationship types, property keys, indexes, and constraints. Every label and property created during the ETL process is automatically registered as metadata [7]. There are three points that explains why metadata is an important consdieration during design:
 
 ### 1. Determines what questions can be asked and answered
 
@@ -366,13 +366,13 @@ Indexes and constraints are also parth of the metadata layer. An index on `Airpo
 
 ### 3. Metada acts as documentation
 
-Once a graph is implemented, the metadata becomes its documentaiton. Running `CALL db.schema.visualization()` produces an image of the structure, as shown above, allowing anyone joining the project to understand the graph's design without reading the entire ETL pipeline.
+Once a graph is implemented, the metadata becomes its documentaiton. Running `CALL db.schema.visualization()` produces an image of the structure, as shown above, allowing anyone joining the project to understand the graph's design without reading the entire ETL pipeline [7].
 
-## 8.2. How Metadata Leverages Developers
+## 8.2. How Developers Can Leverage Metadata
 
 Once the database is populated, its metadata becomes a tool for writing more effective and efficient queries. Neo4j provides built-in procedures and the APOC library for inspecting the live schema, which is useful for understanding an unfamiliar graph, validating query assumptions, and planning for performance [8].
 
-### 1. Schmea inspection for understabdibg the graph
+### 1. Schmea inspection for understanding the graph
 
 Running `CALL db.schema.visualization()` returns a visual summary of all node labels and how they connect. For this project, the result, shown above. confirm two node types of `Airline` and `Airport`, and two relationship types of `OPERATES` from Airline to Airport, and `ROUTE` between Airports. This is enough to verify that the chained pattern `(Airline)-[:OPERATES]->(Airport)-[:ROUTE]->(Airport)` used in queries C, D, and F is actually valid before writing them.
 
